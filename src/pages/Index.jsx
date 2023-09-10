@@ -1,48 +1,10 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
+import { obtenerClientes } from '../data/clientes'
 
 export const loader = () => {
-
-  //Este arreglo vendria siendo el estado inicial de clientes
-  const clientes = [
-    {
-      id: 1,
-      nombre: 'Juan',
-      telefono: 102013313,
-      email: "juan@juan.com",
-      empresa: 'Codigo Con Juan'
-    },
-    {
-      id: 2,
-      nombre: 'Karen',
-      telefono: 138198313,
-      email: "karen@juan.com",
-      empresa: 'Codigo Con Juan'
-    },
-    {
-      id: 3,
-      nombre: 'Josue',
-      telefono: 31983913,
-      email: "josue@juan.com",
-      empresa: 'Codigo Con Juan'
-    },
-    {
-      id: 4,
-      nombre: 'Miguel',
-      telefono: 319381983,
-      email: "miguel@juan.com",
-      empresa: 'Codigo Con Juan'
-    },
-    {
-      id: 5,
-      nombre: 'Pedro',
-      telefono: 1398198938,
-      email: "pedro@juan.com",
-      empresa: 'Codigo Con Juan'
-    },
-  ];
-
-  return clientes
+  const clientesObtenidos = obtenerClientes()
+  return clientesObtenidos
 }
 
 const Index = () => {
@@ -55,6 +17,74 @@ const Index = () => {
       <h1 className='font-black text-4xl text-blue-900'>Clientes</h1>
 
       <p className='mt-3'>Administra tus Clientes</p>
+
+      {
+        data.length ?
+
+        <table className='bg-white shadow mt-5 table-auto w-full rounded'>
+          <thead className='bg-blue-800 text-white'>
+             <tr>
+              <th className='p-2'>
+                Cliente
+              </th>
+              <th className='p-2'>
+                Contacto
+              </th>
+              <th className='p-2'>
+                Acciones
+              </th>
+             </tr>
+          </thead>
+          <tbody>
+            {
+              data.map( cliente => ( 
+                <tr className='border-b' key={cliente.id}>
+
+                  <td className='p-6 space-y-2' >
+                    <p className='text-2xl text-gray-800'>
+                      {cliente.nombre}
+                    </p>
+                    <p>
+                      {cliente.empresa}
+                    </p>
+                  </td>
+
+                  <td className='p-6'>
+                    <p className='text-gray-600'>
+                      <span className='text-gray-800 uppercase font-bold'>
+                        Email: 
+                      </span>
+                      {cliente.email}
+                    </p>
+                    
+                    <p className='text-gray-600'>
+                      <span className='text-gray-800 uppercase font-bold'>
+                        Tel: 
+                      </span>
+                      {cliente.telefono} 
+                    </p>
+                  </td>
+
+                  <td className='p-6 flex gap-3'>
+                    <button type='button' className='text-blue-600 hover:text-blue-700 transition uppercase font-bold text-xs'>
+                      Editar
+                    </button>
+
+                    <button type='button' className='text-red-600 hover:text-red-700 transition uppercase font-bold text-xs'>
+                      Eliminar
+                    </button>
+                  </td>
+
+                </tr>
+              ) )
+            }
+             </tbody>
+        </table> :
+
+        <p className='text-center mt-10'>
+          No hay clientes
+        </p>
+      }
 
     </div>
   )
