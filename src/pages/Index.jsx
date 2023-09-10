@@ -1,11 +1,16 @@
 import React from 'react'
-import { useLoaderData, useNavigate, Form } from 'react-router-dom'
-import { obtenerClientes } from '../data/clientes'
+import { useLoaderData, useNavigate, Form, redirect } from 'react-router-dom'
+import { obtenerClientes, eliminarCliente } from '../data/clientes'
 
 export const loader = () => {
   //Usar json-server --watch db.json para que funciones el GET a este archivo en la terminal
   const clientesObtenidos = obtenerClientes()
   return clientesObtenidos
+}
+
+export const action  = async ({params}) => {
+  await eliminarCliente(params.id)
+  return redirect('/')
 }
 
 const Index = () => {
@@ -75,7 +80,14 @@ const Index = () => {
                       Editar
                     </button>
 
-                    <Form>
+                    <Form
+                      method='post'
+                      action={`/clientes/${cliente.id}/eliminar`}
+                      onSubmit={(event) => {
+                        if (!confirm("¿Deseas eliminar este cliente")) {
+                          event.preventDefault()
+                        }
+                      }}>
 
                       <button
                         type='submit'

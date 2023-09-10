@@ -6,6 +6,7 @@ import NuevoCliente, { action as nuevoCLienteActions } from './pages/NuevoClient
 import Index, { loader as clientesLoader } from './pages' //el loader es para gestionar el state con React Router DOM
 import ErrorPage from './components/ErrorPage'
 import EditarCliente, {loader as editarClienteLoader, action as editarClienteAction} from './pages/EditarCliente'
+import { action as eliminarClienteAction } from './pages'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         loader: editarClienteLoader,
         action: editarClienteAction,
         errorElement: <ErrorPage/>
+      },
+      {
+        path: '/clientes/:id/eliminar',
+        action: eliminarClienteAction
       }
     ]
   }
