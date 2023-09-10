@@ -1,12 +1,15 @@
 import React from 'react'
-import { useNavigate,Form, useActionData } from 'react-router-dom'
+import { useNavigate,Form, useActionData, redirect } from 'react-router-dom'
 import Formulario from '../components/Formulario'
 import Error from '../components/Error'
+import { agregarCliente } from '../data/clientes'
 
 export const action = async ({request}) => {
     const formData = await request.formData()
 
     const data = Object.fromEntries(formData)
+
+    const email = formData.get('email')
 
     //Validando el formulario
     const errores = []
@@ -25,6 +28,11 @@ export const action = async ({request}) => {
     if (Object.keys(errores).length) {
         return errores
     }
+
+    await agregarCliente(data)
+
+    return redirect('/')
+
 }
 
 const NuevoCliente = () => {

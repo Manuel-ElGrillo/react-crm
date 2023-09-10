@@ -1,8 +1,9 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate, Form } from 'react-router-dom'
 import { obtenerClientes } from '../data/clientes'
 
 export const loader = () => {
+  //Usar json-server --watch db.json para que funciones el GET a este archivo en la terminal
   const clientesObtenidos = obtenerClientes()
   return clientesObtenidos
 }
@@ -10,6 +11,7 @@ export const loader = () => {
 const Index = () => {
 
   const data = useLoaderData() // Esto retorna el listado de clientes de arriba
+  const navigate = useNavigate()
 
   return (
     <div>
@@ -66,13 +68,23 @@ const Index = () => {
                   </td>
 
                   <td className='p-6 flex gap-3'>
-                    <button type='button' className='text-blue-600 hover:text-blue-700 transition uppercase font-bold text-xs'>
+                    <button 
+                      type='button' 
+                      className='text-blue-600 hover:text-blue-700 transition uppercase font-bold text-xs'
+                      onClick={ () => navigate(`/clientes/${cliente.id}/editar`) }>
                       Editar
                     </button>
 
-                    <button type='button' className='text-red-600 hover:text-red-700 transition uppercase font-bold text-xs'>
-                      Eliminar
-                    </button>
+                    <Form>
+
+                      <button
+                        type='submit'
+                        className='text-red-600 hover:text-red-700 transition uppercase font-bold text-xs'>
+                        Eliminar
+                      </button>
+
+                    </Form>
+
                   </td>
 
                 </tr>

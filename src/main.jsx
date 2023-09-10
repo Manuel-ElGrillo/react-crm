@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import NuevoCliente, { action as nuevoCLienteActions } from './pages/NuevoCliente'
 import Index, { loader as clientesLoader } from './pages' //el loader es para gestionar el state con React Router DOM
 import ErrorPage from './components/ErrorPage'
+import EditarCliente, {loader as editarClienteLoader, action as editarClienteAction} from './pages/EditarCliente'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -22,6 +23,14 @@ const router = createBrowserRouter([
         path: '/clientes/nuevo',
         element: <NuevoCliente/>,
         action: nuevoCLienteActions,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path: '/clientes/:id/editar', //Routing dinamico
+        element: <EditarCliente/>,
+        loader: editarClienteLoader,
+        action: editarClienteAction,
+        errorElement: <ErrorPage/>
       }
     ]
   }
